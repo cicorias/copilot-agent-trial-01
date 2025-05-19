@@ -11,29 +11,26 @@ struct VirtualMachineListView: View {
             List {
                 ForEach(viewModel.virtualMachines) { vm in
                     VirtualMachineRow(vm: vm)
-                        .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
+                        .contextMenu {
+                            Button {
                                 selectedVM = vm
                                 showingDeleteConfirmation = true
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
-                        }
-                        .swipeActions(edge: .leading) {
+                            
                             if vm.status.isRunning {
                                 Button {
                                     viewModel.stopVirtualMachine(withID: vm.id)
                                 } label: {
                                     Label("Stop", systemImage: "stop.circle")
                                 }
-                                .tint(.orange)
                             } else {
                                 Button {
                                     viewModel.startVirtualMachine(withID: vm.id)
                                 } label: {
                                     Label("Start", systemImage: "play.circle")
                                 }
-                                .tint(.green)
                             }
                         }
                         .contentShape(Rectangle())
@@ -44,7 +41,7 @@ struct VirtualMachineListView: View {
             }
             .navigationTitle("Virtual Machines")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .automatic) {
                     Button {
                         showingAddVM = true
                     } label: {
@@ -69,6 +66,8 @@ struct VirtualMachineListView: View {
                 Text("Are you sure you want to delete this virtual machine? This action cannot be undone.")
             }
         }
+        .frame(minWidth: 600, minHeight: 400)
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
     }
 }
 

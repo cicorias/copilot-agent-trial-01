@@ -22,16 +22,17 @@ struct AddVirtualMachineView: View {
                     TextField("IP Address (Optional)", text: $ipAddress)
                 }
             }
+            .padding()
+            .frame(minWidth: 400, minHeight: 300)
             .navigationTitle("Add Virtual Machine")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
                         dismiss()
                     }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
                         let vm = VirtualMachine(
                             name: name,
